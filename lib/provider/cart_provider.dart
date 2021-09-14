@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import '../models/product_model.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
 
 class CartProvider extends ChangeNotifier {
