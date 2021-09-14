@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../store/store.dart';
+import '../provider/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var store = Provider.of<Store>(context);
+    var cart = Provider.of<CartProvider>(context);
     GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
     return Scaffold(
@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              store.clearCart();
+              cart.clearCart();
             },
             icon: Icon(
               Icons.clear_all,
@@ -34,7 +34,7 @@ class CartScreen extends StatelessWidget {
         ],
       ),
       body: Column(children: [
-        ...store.cart.map((item) {
+        ...cart.cart.map((item) {
           return Container(
               child: Padding(
             padding: const EdgeInsets.all(20),
@@ -58,7 +58,7 @@ class CartScreen extends StatelessWidget {
             ),
           ));
         }),
-        (store.cart.length > 0)
+        (cart.cart.length > 0)
             ? Column(
                 children: [
                   Divider(
@@ -74,7 +74,7 @@ class CartScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 24, color: Colors.black45),
                         ),
                         Text(
-                          "Rs. ${store.getCartTotal().toStringAsFixed(2)}",
+                          "Rs. ${cart.getCartTotal().toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 24),
                         ),
                       ],

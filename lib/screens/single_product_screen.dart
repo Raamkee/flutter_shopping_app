@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
-import '../store/store.dart';
+import '../provider/cart_provider.dart';
 
 class SingleProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var store = Provider.of<Store>(context);
-    Product product = store.activeProduct;
+    var cart = Provider.of<CartProvider>(context);
+    Product product = cart.activeProduct;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -27,7 +27,7 @@ class SingleProductScreen extends StatelessWidget {
                   ),
                   onPressed: () => Navigator.pushNamed(context, '/cart'),
                 ),
-                store.getCartQuantity() > 0
+                cart.getCartQuantity() > 0
                     ? Container(
                         alignment: Alignment.topRight,
                         width: 40,
@@ -44,7 +44,7 @@ class SingleProductScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
                               child: Text(
-                                store.getCartQuantity().toString(),
+                                cart.getCartQuantity().toString(),
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -57,7 +57,7 @@ class SingleProductScreen extends StatelessWidget {
           ],
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(store.activeProduct.name,
+          title: Text(cart.activeProduct.name,
               style: TextStyle(color: Colors.black45)),
         ),
         body: ListView(
@@ -84,7 +84,7 @@ class SingleProductScreen extends StatelessWidget {
                           Icons.add,
                           color: Colors.blue,
                         ),
-                        onPressed: () => {store.addItemToCart(product)}),
+                        onPressed: () => {cart.addItemToCart(product)}),
                     Text(
                       product.quantity.toString(),
                       style: TextStyle(
@@ -98,7 +98,7 @@ class SingleProductScreen extends StatelessWidget {
                           Icons.remove,
                           color: Colors.red,
                         ),
-                        onPressed: () => {store.removeItemFromCart(product)}),
+                        onPressed: () => {cart.removeItemFromCart(product)}),
                   ],
                 ))
               ],

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/product.dart';
-import '../store/store.dart';
+import '../provider/cart_provider.dart';
 import '../widgets/product_list_item.dart';
 
 class ProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var store = Provider.of<Store>(context);
+    var cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,7 +36,7 @@ class ProductListScreen extends StatelessWidget {
                 ),
                 onPressed: () => Navigator.pushNamed(context, '/cart'),
               ),
-              store.getCartQuantity() > 0
+              cart.getCartQuantity() > 0
                   ? Container(
                       alignment: Alignment.topRight,
                       width: 40,
@@ -54,7 +53,7 @@ class ProductListScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
                             child: Text(
-                              store.getCartQuantity().toString(),
+                              cart.getCartQuantity().toString(),
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -89,10 +88,10 @@ class ProductListScreen extends StatelessWidget {
               ],
             ),
           ),
-          ...store.products.map((item) {
+          ...cart.products.map((item) {
             return InkWell(
                 onTap: () {
-                  store.setActiveProduct(item);
+                  cart.setActiveProduct(item);
                   Navigator.pushNamed(context, '/product');
                 },
                 child: ProductListItem(product: item));
